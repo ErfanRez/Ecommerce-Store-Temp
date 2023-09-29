@@ -10,6 +10,7 @@ import IconButton from "@/components/ui/IconButton";
 import Currency from "@/components/ui/Currency";
 import { Product } from "@/types";
 import usePreview from "@/hooks/usePreview";
+import useCart from "@/hooks/UseCart";
 
 interface ProductCard {
   data: Product;
@@ -17,6 +18,7 @@ interface ProductCard {
 
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
   const previewModal = usePreview();
+  const cart = useCart();
   const router = useRouter();
 
   const handleClick = () => {
@@ -26,6 +28,11 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     previewModal.onOpen(data);
+  };
+
+  const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    cart.addItem(data);
   };
 
   return (
@@ -48,7 +55,7 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
               icon={<Expand size={20} className="text-gray-600" />}
             />
             <IconButton
-              onClick={() => {}}
+              onClick={onAddToCart}
               icon={<ShoppingCart size={20} className="text-gray-600" />}
             />
           </div>
