@@ -4,20 +4,19 @@ import Image from "next/image";
 import { MouseEventHandler } from "react";
 import { Expand, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { formatter } from "@/lib/utils";
 
-import IconButton from "@/components/ui/IconButton";
 import Currency from "@/components/ui/Currency";
-import { Product } from "@/types";
-import usePreview from "@/hooks/usePreview";
+import IconButton from "@/components/ui/IconButton";
+import usePreviewModal from "@/hooks/usePreview";
 import useCart from "@/hooks/UseCart";
+import { Product } from "@/types";
 
 interface ProductCard {
   data: Product;
 }
 
 const ProductCard: React.FC<ProductCard> = ({ data }) => {
-  const previewModal = usePreview();
+  const previewModal = usePreviewModal();
   const cart = useCart();
   const router = useRouter();
 
@@ -27,11 +26,13 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
+
     previewModal.onOpen(data);
   };
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
+
     cart.addItem(data);
   };
 
@@ -66,7 +67,7 @@ const ProductCard: React.FC<ProductCard> = ({ data }) => {
         <p className="font-semibold text-lg">{data.name}</p>
         <p className="text-sm text-gray-500">{data.category?.name}</p>
       </div>
-      {/* Price & Review */}
+      {/* Price & Reiew */}
       <div className="flex items-center justify-between">
         <Currency value={data?.price} />
       </div>
